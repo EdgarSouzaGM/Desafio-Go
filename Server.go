@@ -33,7 +33,7 @@ type Dollar struct {
 func GetDollarRate() (Dollar, error) {
 	var cotacao Dollar
 	url := "https://economia.awesomeapi.com.br/json/last/USD-BRL"
-	timeout := 200 * time.Millisecond
+	timeout := 2000 * time.Millisecond
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
@@ -95,7 +95,7 @@ func createTable(db *sql.DB) {
 func insertCotacao(db *sql.DB, cotacao Dollar) error {
 	insertCotacaoSQL := `INSERT INTO cotacao (code, codein, name, high, low, varBid, pctChange, bid, ask, timestamp, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
 	defer cancel()
 
 	statement, err := db.PrepareContext(ctx, insertCotacaoSQL)

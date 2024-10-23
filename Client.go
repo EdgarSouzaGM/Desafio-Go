@@ -18,7 +18,7 @@ type Dollar struct {
 
 func getDollarRate() (string, error) {
 	url := "http://localhost:8080/cotacao"
-	timeout := 300 * time.Millisecond
+	timeout := 3000 * time.Millisecond
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
@@ -56,5 +56,17 @@ func main() {
 		}
 	} else {
 		fmt.Printf("Cotação do Dólar: %s\n", bid)
+
+		// Salvar a cotação em um arquivo
+		file, err := os.Create("cotacao.txt")
+		if err != nil {
+			log.Fatalf("Erro ao criar arquivo: %v\n", err)
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(fmt.Sprintf("Dólar: %s\n", bid))
+		if err != nil {
+			log.Fatalf("Erro ao escrever no arquivo: %v\n", err)
+		}
 	}
 }
