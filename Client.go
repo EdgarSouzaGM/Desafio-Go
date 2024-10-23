@@ -57,7 +57,7 @@ func main() {
 	} else {
 		fmt.Printf("Cotação do Dólar: %s\n", bid)
 
-		// Salvar a cotação em um arquivo
+		
 		file, err := os.Create("cotacao.txt")
 		if err != nil {
 			log.Fatalf("Erro ao criar arquivo: %v\n", err)
