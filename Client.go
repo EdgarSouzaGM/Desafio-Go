@@ -57,6 +57,10 @@ func main() {
 	} else {
 		fmt.Printf("Cotação do Dólar: %s\n", bid)
 
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 7d82fc147a763e25cae7dcd13e126fb7a14733b8
 		file, err := os.Create("cotacao.txt")
 		if err != nil {
 			log.Fatalf("Erro ao criar arquivo: %v\n", err)
