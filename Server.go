@@ -11,7 +11,7 @@ import (
 	"os"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/glebarez/go-sqlite"
 )
 
 type Dollar struct {
@@ -68,18 +68,18 @@ func GetDollarRate() (Dollar, error) {
 
 func createTable(db *sql.DB) {
 	createTableSQL := `CREATE TABLE IF NOT EXISTS cotacao (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        code VARCHAR(50),
-        codein VARCHAR(50),
-        name VARCHAR(100),
-        high VARCHAR(50),
-        low VARCHAR(50),
-        varBid VARCHAR(50),
-        pctChange VARCHAR(50),
-        bid VARCHAR(50),
-        ask VARCHAR(50),
-        timestamp VARCHAR(50),
-        create_date VARCHAR(50)
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT,
+        codein TEXT,
+        name TEXT,
+        high TEXT,
+        low TEXT,
+        varBid TEXT,
+        pctChange TEXT,
+        bid TEXT,
+        ask TEXT,
+        timestamp TEXT,
+        create_date TEXT
     );`
 	statement, err := db.Prepare(createTableSQL)
 	if err != nil {
@@ -135,8 +135,7 @@ func BuscaCotacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dsn := "root:root@tcp(localhost:3306)/goexpert"
-	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("sqlite", "./cotacoes.db")
 	if err != nil {
 		log.Fatal(err)
 	}
